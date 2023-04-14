@@ -16,7 +16,7 @@ export default class RecommendationScreen extends Component {
     super(props);
     this.state = {
       data: [],
-      ngrok_url: "https://5cf8-2804-1b0-0-7813-316c-6ced-8fbd-2427.sa.ngrok.io",
+      ngrok_url: "https://c2ce-2804-1b0-0-7813-316c-6ced-8fbd-2427.sa.ngrok.io",
     };
   }
 
