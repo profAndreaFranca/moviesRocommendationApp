@@ -8,7 +8,7 @@ export default function StackNavigator() {
   return (
     <Stack.Navigator
       screenOptions={() => ({
-        headerShown: false,
+        headerShown: true,
       })}
     >
       <Stack.Screen name="Home" component={HomeScreen} />
