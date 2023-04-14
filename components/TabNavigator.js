@@ -2,19 +2,17 @@ import React from "react";
 import PopularScreen from "../screens/Popular";
 import RecommendationScreen from "../screens/Recommendation";
 import LikedScreen from "../screens/Liked";
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { RFValue } from "react-native-responsive-fontsize";
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 export default function TabNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName="Liked"
-      activeColor="#f0edf6"
-      inactiveColor="#3e2465"
-      barStyle={{ paddingBottom: 48, backgroundColor: '#694fad' }}
+      
     >
       <Tab.Screen name="Popular" component={PopularScreen} />
       <Tab.Screen name="Recommended" component={RecommendationScreen} />
