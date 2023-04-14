@@ -9,26 +9,70 @@ import {
 } from "react-native";
 import axios from "axios";
 import { RFValue } from "react-native-responsive-fontsize";
-import Star from 'react-native-star-view';
+import Star from "react-native-star-view";
 
+export default class LikedScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      ngrok_url: "https://5cf8-2804-1b0-0-7813-316c-6ced-8fbd-2427.sa.ngrok.io",
+    };
+  }
 
-export default class LikedScreen extends Component{
-    constructor(props) {
-        super(props);
-      }
-    
-      render() {
-        return (
-          <View style={styles.container}>
-            <ImageBackground
-              source={require("../assets/bg.png")}
-              style={{ flex: 1 }}
-            >
-              
-            </ImageBackground>
+  componentDidMount() {
+    this.getData();
+  }
+
+  getData = () => {
+    const url = this.state.ngrok_url+"/liked";
+    axios
+      .get(url)
+      .then(async (response) => {
+        this.setState({ data: response.data.data });
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
+  keyExtractor = (item, index) => index.toString();
+
+  renderItems = ({ item, index }) => {
+    return (
+      <View style={styles.cardContainer}>
+        <Image
+          style={styles.posterImage}
+          source={{ uri: item.poster_link }}
+        ></Image>
+        <View style={styles.movieTitleContainer}>
+          <Text style={styles.title}>{item.original_title}</Text>
+          <View style={{flexDirection:"row"}}>
+            <Text style={styles.subtitle}>{item.duration} min | </Text>
+            <Star score={item.rating} style={styles.starStyle}/>
           </View>
-        );
-      }
+        </View>
+      </View>
+    );
+  };
+
+  render() {
+    const { data } = this.state;
+    return (
+      <View style={styles.container}>
+        <ImageBackground
+          source={require("../assets/bg.png")}
+          style={{ flex: 1 }}
+        >
+          <FlatList
+            data={data}
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderItems}
+          />
+        </ImageBackground>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
