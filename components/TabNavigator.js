@@ -14,7 +14,7 @@ export default function TabNavigator() {
       initialRouteName="Liked"
       activeColor="#f0edf6"
       inactiveColor="#3e2465"
-      barStyle={{ paddingBottom: 48 }}
+      barStyle={{ paddingBottom: 48, backgroundColor: '#694fad' }}
     >
       <Tab.Screen name="Popular" component={PopularScreen} />
       <Tab.Screen name="Recommended" component={RecommendationScreen} />
