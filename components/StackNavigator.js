@@ -10,7 +10,7 @@ export default function StackNavigator() {
       screenOptions={() => ({
         headerShown: true,
       })}
-      initialRouteName="Movies"
+      initialRouteName="Home"
     >
       <Stack.Screen name="Movies" component={TabNavigator} />
       <Stack.Screen name="Home" component={HomeScreen} />
