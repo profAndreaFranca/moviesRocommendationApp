@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Ionicons } from "react-native-vector-icons";
+import axios from "axios";
 import Star from "react-native-star-view";
 
 export default class HomeScreen extends Component {
@@ -16,8 +17,12 @@ export default class HomeScreen extends Component {
     super();
     this.state = {
       movieDetails: {},
-      ngrok_url: "",
+      ngrok_url: "https://5cf8-2804-1b0-0-7813-316c-6ced-8fbd-2427.sa.ngrok.io",
     };
+  }
+
+  componentDidMount(){
+    this.getMovie()
   }
 
   getMovie = () => {
@@ -69,69 +74,74 @@ export default class HomeScreen extends Component {
   };
 
   render() {
-    return (
-      <View style={styles.container}>
-        <ImageBackground
-          source={require("../assets/bg.png")}
-          style={{ flex: 1 }}
-        >
-          <View style={styles.headerContainer}>
-            <Text style={styles.headerTitle}>Recomendação de Filmes</Text>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("Movies");
-              }}
-            >
-              <Ionicons name="caret-forward-circle" size={RFValue(30)} />
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.subContainer}>
-            <View style={styles.posterContainer}>
-              {/* <Image style={styles.posterImage} source={{ uri: poster_link }} /> */}
+    const { movieDetails } = this.state;
+    if (movieDetails.poster_link) {
+        const { poster_link, original_title, release_date, duration, rating } = movieDetails;
+        return (
+            <View style={styles.container}>
+              <ImageBackground
+                source={require("../assets/bg.png")}
+                style={{ flex: 1 }}
+              >
+                <View style={styles.headerContainer}>
+                  <Text style={styles.headerTitle}>Recomendação de Filmes</Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.props.navigation.navigate("Movies");
+                    }}
+                  >
+                    <Ionicons name="caret-forward-circle" size={RFValue(30)} />
+                  </TouchableOpacity>
+                </View>
+      
+                <View style={styles.subContainer}>
+                  <View style={styles.posterContainer}>
+                    <Image style={styles.posterImage} source={{ uri: poster_link }} />
+                  </View>
+      
+                  <View style={{ flex: 0.15 }}>
+                    <View style={styles.detailsContainer}>
+                      <Text style={styles.title}>
+                        {original_title}
+                      </Text>
+                      <Text style={styles.subtitle}>
+                        {release_date.split("-")[0]} | {duration} mins
+                      </Text>
+                    </View>
+                  </View>
+      
+                  <View style={styles.ratingContainer}>
+                    <Star score={rating} style={styles.starStyle} />
+                  </View>
+      
+                  <View style={styles.iconButtonContainer}>
+                    <TouchableOpacity onPress={this.likedMovie}>
+                      <Image
+                        style={styles.iconImage}
+                        source={require("../assets/like.png")}
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this.dislikedMovie}>
+                      <Image
+                        style={styles.iconImage}
+                        source={require("../assets/dislike.png")}
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this.notWatched}>
+                      <Image
+                        style={styles.iconImage}
+                        source={require("../assets/didNotWatch.png")}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </ImageBackground>
             </View>
-
-            <View style={{ flex: 0.15 }}>
-              <View style={styles.detailsContainer}>
-                <Text style={styles.title}>
-                  {/* {original_title} */}
-                  Título
-                </Text>
-                <Text style={styles.subtitle}>
-                  {/* {release_date.split("-")[0]} | {duration} mins */}
-                  subtitulo
-                </Text>
-              </View>
-            </View>
-
-            <View style={styles.ratingContainer}>
-              <Star score={5} style={styles.starStyle} />
-            </View>
-
-            <View style={styles.iconButtonContainer}>
-              <TouchableOpacity onPress={this.likedMovie}>
-                <Image
-                  style={styles.iconImage}
-                  source={require("../assets/like.png")}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={this.dislikedMovie}>
-                <Image
-                  style={styles.iconImage}
-                  source={require("../assets/dislike.png")}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={this.notWatched}>
-                <Image
-                  style={styles.iconImage}
-                  source={require("../assets/didNotWatch.png")}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </ImageBackground>
-      </View>
-    );
+          );
+    } else {
+        return null
+    }
+    
   }
 }
 
