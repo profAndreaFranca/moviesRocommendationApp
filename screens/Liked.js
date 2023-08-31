@@ -16,24 +16,16 @@ export default class LikedScreen extends Component {
     super(props);
     this.state = {
       data: [],
-      ngrok_url: "https://c2ce-2804-1b0-0-7813-316c-6ced-8fbd-2427.sa.ngrok.io",
+      ngrok_url: "",
     };
   }
 
   componentDidMount() {
-    this.getData();
+    
   }
 
   getData = () => {
-    const url = this.state.ngrok_url+"/liked";
-    axios
-      .get(url)
-      .then(async (response) => {
-        this.setState({ data: response.data.data });
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    //recuperar dados
   };
 
   keyExtractor = (item, index) => index.toString();

@@ -17,7 +17,7 @@ export default class HomeScreen extends Component {
     super();
     this.state = {
       movieDetails: {},
-      ngrok_url: "https://c2ce-2804-1b0-0-7813-316c-6ced-8fbd-2427.sa.ngrok.io",
+      ngrok_url: "",
     };
   }
 
@@ -26,51 +26,19 @@ export default class HomeScreen extends Component {
   }
 
   getMovie = () => {
-    const url = this.state.ngrok_url + "/movies";
-    axios
-      .get(url)
-      .then((response) => {
-        this.setState({ movieDetails: response.data.data });
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    //recuperar os filmes
   };
 
   likedMovie = () => {
-    const url = this.state.ngrok_url + "/like";
-    axios
-      .get(url)
-      .then((response) => {
-        this.getMovie();
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    //curtidos
   };
 
   dislikedMovie = () => {
-    const url = this.state.ngrok_url + "/dislike";
-    axios
-      .get(url)
-      .then((response) => {
-        this.getMovie();
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    //não curtidos
   };
 
   notWatched = () => {
-    const url = this.state.ngrok_url + "/did_not_watch";
-    axios
-      .get(url)
-      .then((response) => {
-        this.getMovie();
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    //não assistidos
   };
 
   render() {
@@ -87,7 +55,7 @@ export default class HomeScreen extends Component {
                   <Text style={styles.headerTitle}>Recomendação de Filmes</Text>
                   <TouchableOpacity
                     onPress={() => {
-                      this.props.navigation.navigate("Movies");
+                      // this.props.navigation.navigate("Movies");
                     }}
                   >
                     <Ionicons name="caret-forward-circle" size={RFValue(30)} />
@@ -96,22 +64,26 @@ export default class HomeScreen extends Component {
       
                 <View style={styles.subContainer}>
                   <View style={styles.posterContainer}>
-                    <Image style={styles.posterImage} source={{ uri: poster_link }} />
+                    {/* incluir poster do filme */}
+                    {/* <Image style={styles.posterImage} source={{  }} /> */}
                   </View>
       
                   <View style={{ flex: 0.15 }}>
                     <View style={styles.detailsContainer}>
                       <Text style={styles.title}>
-                        {original_title}
+                        {/* Exibir o título do filme */}
+                        
                       </Text>
                       <Text style={styles.subtitle}>
-                        {release_date.split("-")[0]} | {duration} mins
+                        {/* Exibir a data e duração do filme */}
+                        
                       </Text>
                     </View>
                   </View>
       
                   <View style={styles.ratingContainer}>
-                    <Star score={rating} style={styles.starStyle} />
+                    {/* Exibir avaliação do filme */}
+                    <Star score={5} style={styles.starStyle} />
                   </View>
       
                   <View style={styles.iconButtonContainer}>
